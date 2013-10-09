@@ -100,15 +100,16 @@ def main(settings):
     
     # Randomly vary servo position within a small range
     print myActuators
-    print "Hubo-Ach neck server actice"
+    print "Hubo-Ach neck server active"
 #    print "Servo \tPosition"
     while True:
         # Get the current feed-forward (state) 
+        [statuss, framesizes] = s.get(state, wait=False, last=True)
         for actuator in myActuators:
             if ( actuator.id == 1):
+                actuator.goal_position = rad2dyn(state.joint[ha.NKY].ref)
 #                tmp = rad2dyn(state.joint[ha.NKY].ref)
 #		print tmp
-                actuator.goal_position = rad2dyn(state.joint[ha.NKY].ref)
             if ( actuator.id == 2):
                 actuator.goal_position = rad2dyn(state.joint[ha.NK1].ref)
             if ( actuator.id == 3):
@@ -122,7 +123,7 @@ def main(settings):
             time.sleep(0.01)
 #        for actuator in myActuators:
 #            print actuator._id, "\t", actuator.current_position
-        time.sleep(0.02)
+        time.sleep(0.05)
 
 def validateInput(userInput, rangeMin, rangeMax):
     '''
